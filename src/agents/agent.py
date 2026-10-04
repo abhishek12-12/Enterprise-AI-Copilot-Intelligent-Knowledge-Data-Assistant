@@ -1,4 +1,4 @@
-from langchain_ollama import ChatOllama
+from src.llm.provider import get_llm
 from langchain_core.messages import (
     HumanMessage,
     ToolMessage,
@@ -14,10 +14,7 @@ from src.database.mongo_tool import query_company_nosql
 # 1. Load Ollama model
 # ============================================================
 
-llm = ChatOllama(
-    model="llama3.2",
-    temperature=0
-)
+llm = get_llm()
 
 
 # ============================================================
