@@ -1,3 +1,4 @@
+from src.utils.logger import get_logger
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -10,7 +11,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-
+logger=get_logger(__name__)
 class QuestionRequest(BaseModel):
     question: str
 
@@ -31,7 +32,11 @@ def health():
 
 @app.post("/ask")
 def ask(request: QuestionRequest):
+    logger.info(f"Received question: {request.question}")
+
     answer = ask_agent(request.question)
+
+    logger.info("Question processed successfully")
 
     return {
         "question": request.question,
