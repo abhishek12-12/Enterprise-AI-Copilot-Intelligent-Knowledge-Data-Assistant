@@ -1,13 +1,10 @@
 from src.database.sql_tool import query_company_database
 
 
-query = """
-SELECT name, role
-FROM employees
-WHERE city = 'Bangalore'
-"""
+def test_sql_query():
+    question = "How many employees are in Bangalore?"
 
-result = query_company_database.invoke(query)
+    result = query_company_database.invoke(question)
 
-print("\n========== SQL RESULT ==========\n")
-print(result)
+    assert "3 employees" in result
+    assert "Bangalore" in result
