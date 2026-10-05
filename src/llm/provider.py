@@ -21,7 +21,13 @@ def get_llm(provider: str = "ollama"):
             temperature=0
         )
 
+    ollama_base_url = os.getenv(
+    "OLLAMA_BASE_URL",
+    "http://localhost:11434"
+    )
+
     return ChatOllama(
-        model="llama3.2",
-        temperature=0
+    model="llama3.2",
+    temperature=0,
+    base_url=ollama_base_url
     )
