@@ -186,7 +186,7 @@ Then run your ingestion script from `src/ingestion/` to embed the documents into
 uvicorn src.api:app --reload
 
 # In a new terminal, start the Streamlit UI
-streamlit run <your-streamlit-file>.py
+streamlit run app.py
 ```
 
 ---
