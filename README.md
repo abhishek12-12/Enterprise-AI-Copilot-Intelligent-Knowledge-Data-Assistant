@@ -156,8 +156,8 @@ flowchart TD
 
 ```bash
 # 1. Clone the repository
-git clone <your-repo-url>
-cd <your-repo-name>
+git clone (https://github.com/abhishek12-12/Enterprise-AI-Copilot-Intelligent-Knowledge-Data-Assistant.git)
+cd Enterprise-AI-Copilot-Intelligent-Knowledge-Data-Assistant
 
 # 2. Create and activate a virtual environment
 python -m venv .venv
