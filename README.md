@@ -38,7 +38,7 @@ The agent searches the resume using Hugging Face embeddings and ChromaDB, then L
 ### 3. Structured data question (SQLite)
 The agent queries the SQLite employee table and returns a direct answer.
 
-![SQLite employee count](screenshots/03-sqlite-employee-count.jpg)
+![SQLite employee count](screenshot/03-sqlite-employee-count.jpg)
 
 ### 4. Skills and project question (MongoDB)
 The agent fetches the employee profile (ID, city, role, skills, projects) from MongoDB.
