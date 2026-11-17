@@ -43,7 +43,7 @@ The agent queries the SQLite employee table and returns a direct answer.
 ### 4. Skills and project question (MongoDB)
 The agent fetches the employee profile (ID, city, role, skills, projects) from MongoDB.
 
-![MongoDB employee profile](screenshots/04-mongodb-employee-profile.jpg)
+![MongoDB employee profile](screenshot/04-mongodb-employee-profile.jpg)
 
 ---
 
