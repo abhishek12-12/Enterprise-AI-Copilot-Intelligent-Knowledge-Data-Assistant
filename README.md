@@ -21,6 +21,32 @@ An AI-powered assistant that answers questions about company documents and struc
 
 ---
 
+## 📸 Screenshots
+
+Here is the application running locally, answering questions from each of the three data sources.
+
+### 1. Home screen
+The Streamlit chat interface where the user asks questions.
+
+![Home screen](screenshots/01-home-screen.jpg)
+
+### 2. Document question (RAG + ChromaDB)
+The agent searches the resume using Hugging Face embeddings and ChromaDB, then Llama 3.2 lists the skills.
+
+![RAG resume skills](screenshots/02-rag-resume-skills.jpg)
+
+### 3. Structured data question (SQLite)
+The agent queries the SQLite employee table and returns a direct answer.
+
+![SQLite employee count](screenshots/03-sqlite-employee-count.jpg)
+
+### 4. Skills and project question (MongoDB)
+The agent fetches the employee profile (ID, city, role, skills, projects) from MongoDB.
+
+![MongoDB employee profile](screenshots/04-mongodb-employee-profile.jpg)
+
+---
+
 ## 🏗️ Architecture
 
 > [!IMPORTANT]
@@ -96,6 +122,7 @@ flowchart TD
 .
 ├── Data/                  # Source documents and datasets
 ├── chroma_db/             # Persisted ChromaDB vector store
+├── screenshots/           # App screenshots used in this README
 ├── src/
 │   ├── agents/            # LangChain agent and tool routing
 │   ├── database/          # SQL and MongoDB tools
@@ -176,9 +203,9 @@ pytest
 
 | Question | Tool used |
 |---|---|
-| "Summarize the resume of the candidate with Python experience." | RAG (ChromaDB) |
-| "How many employees are in the Engineering department?" | SQLite |
-| "Which employees know Docker and FastAPI?" | MongoDB |
+| "What skills are mentioned in the resume?" | RAG (ChromaDB) |
+| "How many employees are in Bangalore?" | SQLite |
+| "Tell me about Rahul's skills and projects." | MongoDB |
 
 ---
 
