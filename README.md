@@ -1,80 +1,200 @@
-\# Enterprise AI Copilot — Intelligent Knowledge \& Data Assistant
+# 🤖 Enterprise AI Copilot: Intelligent Knowledge and Data Assistant
 
+An AI-powered assistant that answers questions about company documents and structured enterprise data in plain English. A LangChain agent decides which source to use (documents, SQL, or MongoDB) and a local Llama 3.2 model writes the final answer.
 
+> [!NOTE]
+> The whole system runs locally: Llama 3.2 is served through Ollama, so no paid LLM API is needed.
 
-An enterprise-focused Generative AI application that combines RAG, SQL, NoSQL, LLM tool routing, REST APIs, and Docker.
+---
 
+## ✨ Features
 
+- 💬 Chat-style interface built with **Streamlit**
+- ⚡ **FastAPI** backend that exposes a clean REST endpoint
+- 🧠 **LangChain agent** that picks the right tool for each question
+- 📄 **RAG** over documents (resumes, project information) using Hugging Face embeddings and ChromaDB
+- 🗄️ **SQLite** tool for structured employee data
+- 🍃 **MongoDB** tool for employee skills and project details
+- 🦙 **Llama 3.2** (via Ollama) for natural language answers
+- 🧪 Unit tests with **PyTest**
+- 🐳 **Docker** support
 
-\## Key Features
+---
 
+## 🏗️ Architecture
 
+> [!IMPORTANT]
+> The agent is the brain of the system. It reads the user's question, chooses the right tool, and then uses Llama 3.2 to turn the tool result into a final answer.
 
-\- Retrieval-Augmented Generation (RAG)
+### System diagram
 
-\- Hugging Face sentence-transformer embeddings
+```mermaid
+flowchart TD
+    U[👤 User] --> S[Streamlit UI]
+    S -->|HTTP request| F[FastAPI Endpoint]
+    F -->|query| A[LangChain Agent]
 
-\- ChromaDB vector database
+    A -->|Document questions| R[RAG Tool]
+    A -->|Structured employee data| Q[SQL Tool]
+    A -->|Skills and project details| M[Mongo Tool]
 
-\- Llama 3.2 using Ollama
+    R --> H[Hugging Face Embeddings]
+    H --> C[(ChromaDB)]
+    Q --> L[(SQLite)]
+    M --> D[(MongoDB)]
 
-\- LangChain tool-based agent
+    C -->|relevant chunks| A
+    L -->|query results| A
+    D -->|query results| A
 
-\- SQLite SQL database
+    A -->|context + question| O[Llama 3.2 via Ollama]
+    O -->|final answer| A
+    A --> F
+    F -->|JSON response| S
+    S --> U
+```
 
-\- MongoDB NoSQL database
+### Request flow
 
-\- FastAPI REST API
+1. The user asks a question in the **Streamlit UI**.
+2. Streamlit sends the request to the **FastAPI** endpoint.
+3. FastAPI forwards the query to the **LangChain agent**.
+4. The agent chooses a tool based on the question:
+   - **Documents** (for example resumes or project information): uses **RAG** with Hugging Face embeddings and **ChromaDB**.
+   - **Structured employee data**: uses **SQLite**.
+   - **Employee skills or project details**: uses **MongoDB**.
+5. The tool results are returned to the agent.
+6. The agent sends the results to **Llama 3.2** (via Ollama) to generate a natural language answer.
+7. The agent returns the final answer to FastAPI.
+8. FastAPI sends the response back to Streamlit in **JSON** format.
+9. Streamlit displays the final answer to the user.
 
-\- Streamlit user interface
+---
 
-\- Docker containerization
+## 🧰 Tech Stack
 
-\- Automated testing with Pytest
+| Category | Technology |
+|---|---|
+| Language | Python |
+| LLM | Llama 3.2 (via Ollama) |
+| Agent framework | LangChain |
+| Embeddings | Hugging Face |
+| Vector database | ChromaDB |
+| Relational database | SQLite |
+| NoSQL database | MongoDB |
+| Backend | FastAPI |
+| Frontend | Streamlit |
+| Testing | PyTest |
+| Containerization | Docker |
+| Version control | Git |
 
+---
 
-
-\## Architecture
-
-
+## 📁 Project Structure
 
 ```text
+.
+├── Data/                  # Source documents and datasets
+├── chroma_db/             # Persisted ChromaDB vector store
+├── src/
+│   ├── agents/            # LangChain agent and tool routing
+│   ├── database/          # SQL and MongoDB tools
+│   │   ├── check_tool.py
+│   │   ├── create_database.py
+│   │   ├── mongo_tool.py
+│   │   ├── sql_tool.py
+│   │   ├── test_mongo_tool.py
+│   │   └── test_sql_tool.py
+│   ├── ingestion/         # Document loading and embedding
+│   ├── llm/               # Llama 3.2 / Ollama setup
+│   ├── rag/               # Retrieval logic with ChromaDB
+│   ├── utils/             # Helper functions
+│   ├── __init__.py
+│   └── api.py             # FastAPI application
+└── README.md
+```
 
-User
+---
 
-&#x20; |
+## 🚀 Getting Started
 
-&#x20; v
+### Prerequisites
 
-Streamlit UI
+- Python 3.10 or higher
+- [Ollama](https://ollama.com) installed
+- MongoDB running locally (or a connection string)
+- Docker (optional)
 
-&#x20; |
+### Installation
 
-&#x20; v
+```bash
+# 1. Clone the repository
+git clone <your-repo-url>
+cd <your-repo-name>
 
-FastAPI REST API
+# 2. Create and activate a virtual environment
+python -m venv .venv
+source .venv/bin/activate        # On Windows: .venv\Scripts\activate
 
-&#x20; |
+# 3. Install dependencies
+pip install -r requirements.txt
 
-&#x20; v
+# 4. Download the Llama 3.2 model
+ollama pull llama3.2
+```
 
-LangChain Agent
+### Set up the data
 
-&#x20; |
+```bash
+# Create the SQLite database
+python src/database/create_database.py
+```
 
-&#x20; +----> RAG + ChromaDB
+Then run your ingestion script from `src/ingestion/` to embed the documents into ChromaDB.
 
-&#x20; |
+### Run the application
 
-&#x20; +----> SQLite
+```bash
+# Start the FastAPI backend
+uvicorn src.api:app --reload
 
-&#x20; |
+# In a new terminal, start the Streamlit UI
+streamlit run <your-streamlit-file>.py
+```
 
-&#x20; +----> MongoDB
+---
 
-&#x20; |
+## 🧪 Running Tests
 
-&#x20; v
+```bash
+pytest
+```
 
-Llama 3.2 / Ollama
+---
 
+## 💡 Example Questions
+
+| Question | Tool used |
+|---|---|
+| "Summarize the resume of the candidate with Python experience." | RAG (ChromaDB) |
+| "How many employees are in the Engineering department?" | SQLite |
+| "Which employees know Docker and FastAPI?" | MongoDB |
+
+---
+
+## 🔮 Future Improvements
+
+- Chat history and memory
+- User authentication
+- Support for more document types
+- Cloud deployment
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome. Fork the repository, create a branch, and open a pull request.
+
+## 📄 License
+
+This project is licensed under the MIT License.
