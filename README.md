@@ -28,7 +28,7 @@ Here is the application running locally, answering questions from each of the th
 ### 1. Home screen
 The Streamlit chat interface where the user asks questions.
 
-![Home screen](screenshots/01-home-screen.jpg)
+![Home screen](screenshot/01-home-screen.jpg)
 
 ### 2. Document question (RAG + ChromaDB)
 The agent searches the resume using Hugging Face embeddings and ChromaDB, then Llama 3.2 lists the skills.
