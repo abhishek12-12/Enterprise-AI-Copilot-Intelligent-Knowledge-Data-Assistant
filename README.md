@@ -33,7 +33,7 @@ The Streamlit chat interface where the user asks questions.
 ### 2. Document question (RAG + ChromaDB)
 The agent searches the resume using Hugging Face embeddings and ChromaDB, then Llama 3.2 lists the skills.
 
-![RAG resume skills](screenshots/02-rag-resume-skills.jpg)
+![RAG resume skills](screenshot/02-rag-resume-skills.jpg)
 
 ### 3. Structured data question (SQLite)
 The agent queries the SQLite employee table and returns a direct answer.
